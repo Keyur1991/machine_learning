@@ -4,6 +4,7 @@ import flask
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS, cross_origin
 import pickle
+import pandas as pd
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -18,11 +19,12 @@ def predict():
     # read the json data
     data = request.get_json(force=True)
 
-    listd = [data['Brand'], data['Model'], data['Fuel_Type'], data['Transmission'], data['Owner_Type'], data['Mileage'], data['Power'], data['Car_Age']]
+    listd = [data['Brand'], data['Model'], data['Kilometers_Driven'], data['Fuel_Type'], data['Transmission'], data['Owner_Type'], data['Mileage'], data['Engine'], data['Power'], data['Car_Age']]
 
     # convert json data into the numpy array
     np_data = np.array(listd)
-    
+    print('Numpy Data: ', np_data)
+
     prediction = model.predict([np_data]).tolist()
     print(prediction)
     
